@@ -8,6 +8,21 @@ authors = [{name = "Joshua Cook", email = "joshuacook0023@gmail.com"}]
 license = {file = "LICENSE"}
 classifiers = ["License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"]
 dynamic = ["version", "description"]
+dependencies = [
+    ""
+]
 
 [project.urls]
 Home = "https://github.com/jhrcook/nciraspw"
+
+[project.optional-dependencies]
+test = [
+    "pytest >=2.7.3",
+    "pytest-cov",
+    "pytest-pythonpath",
+]
+dev = [
+    "black",
+    "mypy",
+    "isort",
+]
