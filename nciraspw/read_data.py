@@ -16,9 +16,14 @@ class MissingRasPwDataError(BaseException):
     ...
 
 
-def _check_and_read_csv(data_file: RasPathwayDataFile) -> pd.DataFrame:
+def _assert_file_exists(data_file: RasPathwayDataFile) -> None:
     if not ras_pw_file_exists(data_file):
         raise MissingRasPwDataError(data_file.value)
+    return None
+
+
+def _check_and_read_csv(data_file: RasPathwayDataFile) -> pd.DataFrame:
+    _assert_file_exists(data_file)
 
     with pkg_resources.path(ras_pw_data, ras_pw_file_name(data_file)) as fpath:
         edge_list = pd.read_csv(str(fpath))
@@ -84,6 +89,13 @@ def read_node_groups(expand: bool = True) -> pd.DataFrame:
     return pd.DataFrame(infos).reset_index(drop=True).assign(node=nodes)
 
 
+def _convert_interaction_types(
+    df: pd.DataFrame, col: str = "interaction_type"
+) -> pd.DataFrame:
+    df[col] = [Interaction(x.upper()) for x in df[col]]
+    return df
+
+
 def read_node_group_interactions() -> pd.DataFrame:
     """Read Ras pathway node group interactions data.
 
@@ -94,6 +106,7 @@ def read_node_group_interactions() -> pd.DataFrame:
         _check_and_read_csv(RasPathwayDataFile.GROUP_EDGE_LIST)
         .astype({"from": str, "to": str})
         .rename(columns={"from": "from_grp", "to": "to_grp"})
+        .pipe(_convert_interaction_types)
     )
 
 
@@ -115,3 +128,15 @@ def read_edge_list() -> pd.DataFrame:
         .rename(columns={"node": "to"})
         .drop(columns=["group_id"])[["from", "to", "interaction_type"]]
     )
+
+
+def read_protein_complexes() -> list[set[str]]:
+    """Read the protein complexes in the Ras pathway.
+
+    Returns:
+        list[set[str]]: List of collection of proteins that acts as a complex.
+    """
+    prot_comp_file = RasPathwayDataFile.PROTEIN_COMPLEXES
+    _assert_file_exists(prot_comp_file)
+    with pkg_resources.open_text(ras_pw_data, ras_pw_file_name(prot_comp_file)) as file:
+        return [{x.strip() for x in line.strip().split(",")} for line in file]

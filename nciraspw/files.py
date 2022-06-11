@@ -15,6 +15,7 @@ class RasPathwayDataFile(Enum):
     GENE_NAMES_CUSTOM = "GENE_NAMES_CUSTOM"
     NODE_GROUPS = "NODE_GROUPS"
     GROUP_EDGE_LIST = "GROUP_EDGE_LIST"
+    PROTEIN_COMPLEXES = "PROTEIN_COMPLEXES"
 
 
 def ras_pw_file_name(ras_pw_file: RasPathwayDataFile) -> str:
@@ -24,6 +25,7 @@ def ras_pw_file_name(ras_pw_file: RasPathwayDataFile) -> str:
         RasPathwayDataFile.GENE_NAMES_CUSTOM: "ras-pathway-gene-names_custom.csv",
         RasPathwayDataFile.NODE_GROUPS: "ras-pathway-node-groups.csv",
         RasPathwayDataFile.GROUP_EDGE_LIST: "ras-pathway-group-interactions.csv",
+        RasPathwayDataFile.PROTEIN_COMPLEXES: "ras-pathway-protein-complexes.txt",
     }
     return file_map[ras_pw_file]
 

@@ -16,6 +16,12 @@ This package is not released on PyPI at the moment, but it can be installed from
 pip install git+https://github.com/jhrcook/nciraspw.git
 ```
 
+## Mistakes
+
+The information was manually transcribed from the image provided online into parasable data files.
+There are likely mistakes.
+If you notice *any, no matter how small,* please report the problem by opening an [Issue](https://github.com/jhrcook/nciraspw/issues) or fix the mistake yourself and contribute the fix with a Pull Request.
+
 ## Use
 
 ### Raw data files
@@ -39,19 +45,6 @@ read_data.read_gene_names().head()
 
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -110,19 +103,6 @@ read_data.read_node_groups().head()
 
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -186,19 +166,6 @@ read_data.read_node_group_interactions().head()
 
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -213,31 +180,31 @@ read_data.read_node_group_interactions().head()
       <th>0</th>
       <td>1</td>
       <td>2</td>
-      <td>inhibitory</td>
+      <td>Interaction.INHIBITORY</td>
     </tr>
     <tr>
       <th>1</th>
       <td>2</td>
       <td>4</td>
-      <td>activating</td>
+      <td>Interaction.ACTIVATING</td>
     </tr>
     <tr>
       <th>2</th>
       <td>3</td>
       <td>4</td>
-      <td>activating</td>
+      <td>Interaction.ACTIVATING</td>
     </tr>
     <tr>
       <th>3</th>
       <td>4</td>
       <td>7</td>
-      <td>activating</td>
+      <td>Interaction.ACTIVATING</td>
     </tr>
     <tr>
       <th>4</th>
       <td>4</td>
       <td>9</td>
-      <td>activating</td>
+      <td>Interaction.ACTIVATING</td>
     </tr>
   </tbody>
 </table>
@@ -256,19 +223,6 @@ read_data.read_edge_list().head()
 
 
 <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -283,31 +237,31 @@ read_data.read_edge_list().head()
       <th>0</th>
       <td>CBL</td>
       <td>ALK</td>
-      <td>inhibitory</td>
+      <td>Interaction.INHIBITORY</td>
     </tr>
     <tr>
       <th>1</th>
       <td>CBL</td>
       <td>EGFR</td>
-      <td>inhibitory</td>
+      <td>Interaction.INHIBITORY</td>
     </tr>
     <tr>
       <th>2</th>
       <td>CBL</td>
       <td>ERBB2</td>
-      <td>inhibitory</td>
+      <td>Interaction.INHIBITORY</td>
     </tr>
     <tr>
       <th>3</th>
       <td>CBL</td>
       <td>FGFR1</td>
-      <td>inhibitory</td>
+      <td>Interaction.INHIBITORY</td>
     </tr>
     <tr>
       <th>4</th>
       <td>CBL</td>
       <td>FGFR2</td>
-      <td>inhibitory</td>
+      <td>Interaction.INHIBITORY</td>
     </tr>
   </tbody>
 </table>
@@ -321,6 +275,10 @@ The pathway is also available as a NetworkX directed graph object.
 
 
 ```python
+
+import random
+
+import numpy
 import matplotlib.pyplot as plt
 import networkx as nx
 
@@ -329,6 +287,9 @@ from nciraspw.ras_pw_graph import ras_pathway_graph
 
 %matplotlib inline
 %config InlineBackend.figure_format='retina'
+
+random.seed(449)
+numpy.random.seed(449)
 ```
 
 
@@ -337,7 +298,7 @@ ras_pw = ras_pathway_graph()
 print(ras_pw)
 ```
 
-    DiGraph named 'NCI Ras pathway 2.0' with 228 nodes and 933 edges
+    DiGraph named 'NCI Ras pathway 2.0' with 228 nodes and 993 edges
 
 
 
@@ -361,6 +322,8 @@ list(ras_pw.nodes.data())[0]
 
 
 
+The edges are annotated with the type of interaction between the proteins.
+
 
 ```python
 list(ras_pw.edges.data())[0]
@@ -369,7 +332,26 @@ list(ras_pw.edges.data())[0]
 
 
 
-    ('AKT1', 'TSC1', {'interaction': 'inhibitory'})
+    ('AKT1', 'TSC1', {'interaction': <Interaction.INHIBITORY: 'INHIBITORY'>})
+
+
+
+Below are the types of interactions recognized in the graph.
+
+
+```python
+from nciraspw.read_data import Interaction
+
+list(Interaction)
+```
+
+
+
+
+    [<Interaction.ACTIVATING: 'ACTIVATING'>,
+     <Interaction.INHIBITORY: 'INHIBITORY'>,
+     <Interaction.SCAFFOLDING: 'SCAFFOLDING'>,
+     <Interaction.PROTEIN_COMPLEX: 'PROTEIN_COMPLEX'>]
 
 
 
@@ -393,7 +375,7 @@ plt.show()
 
 
 
-![png](README_files/README_21_0.png)
+![png](README_files/README_25_0.png)
 
 
 
@@ -419,7 +401,7 @@ sub_ras_gr = nx.subgraph(ras_pw, path_nodes)
 print(sub_ras_gr)
 ```
 
-    DiGraph named 'NCI Ras pathway 2.0' with 41 nodes and 144 edges
+    DiGraph named 'NCI Ras pathway 2.0' with 41 nodes and 176 edges
 
 
 
@@ -438,4 +420,54 @@ plt.show()
 
 
 
-![png](README_files/README_24_0.png)
+![png](README_files/README_28_0.png)
+
+
+
+To note, in the pathway diagram, proteins separated by periods (".") work as protein complexes.
+There interactions are included in the NetworkX graph and labeled as such.
+Below is an demonstration of this with MTOR, RPTOR, and MLST8.
+
+
+```python
+nodes = {"MTOR", "RPTOR", "MLST8", "RHEB", "EIF4EBP1"}
+
+mtor_complex_gr = nx.subgraph(ras_pw, nodes)
+mtor_complex_pos = nx.kamada_kawai_layout(mtor_complex_gr)
+
+edge_pal: dict[Interaction, str] = {
+    Interaction.INHIBITORY: "red",
+    Interaction.ACTIVATING: "blue",
+    Interaction.PROTEIN_COMPLEX: "k",
+}
+
+edge_colors: dict[tuple[str, str], str] = {}
+for a, b, info in mtor_complex_gr.edges.data():
+    edge_colors[(a, b)] = edge_pal[info["interaction"]]
+
+nx.draw_networkx_edges(
+    mtor_complex_gr,
+    pos=mtor_complex_pos,
+    alpha=0.4,
+    edge_color=list(edge_colors.values()),
+    min_source_margin=15,
+    min_target_margin=15,
+)
+nx.draw_networkx_nodes(mtor_complex_gr, pos=mtor_complex_pos, alpha=0.2, node_size=200)
+nx.draw_networkx_labels(mtor_complex_gr, pos=mtor_complex_pos, font_size=10)
+
+plt.gca().axis("off")
+plt.tight_layout()
+plt.show()
+```
+
+
+
+![png](README_files/README_30_0.png)
+
+
+
+
+```python
+
+```
