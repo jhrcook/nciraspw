@@ -275,6 +275,10 @@ The pathway is also available as a NetworkX directed graph object.
 
 
 ```python
+
+import random
+
+import numpy
 import matplotlib.pyplot as plt
 import networkx as nx
 
@@ -283,6 +287,9 @@ from nciraspw.ras_pw_graph import ras_pathway_graph
 
 %matplotlib inline
 %config InlineBackend.figure_format='retina'
+
+random.seed(449)
+numpy.random.seed(449)
 ```
 
 
@@ -423,7 +430,7 @@ Below is an demonstration of this with MTOR, RPTOR, and MLST8.
 
 
 ```python
-nodes = {"MTOR", "RPTOR", "MLST8", "RHEB", "PRKAA1", "EIF4EBP1", "EIF4EBP2"}
+nodes = {"MTOR", "RPTOR", "MLST8", "RHEB", "EIF4EBP1"}
 
 mtor_complex_gr = nx.subgraph(ras_pw, nodes)
 mtor_complex_pos = nx.kamada_kawai_layout(mtor_complex_gr)
