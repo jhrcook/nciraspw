@@ -1,6 +1,6 @@
 # Run test suite.
 
-name: "Test Suite"
+name: "tests"
 
 on:
   push:
