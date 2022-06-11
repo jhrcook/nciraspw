@@ -1,11 +1,18 @@
 """Ras pathway graph."""
 
-from typing import Any
+from itertools import product
+from typing import Any, Iterable
 
 import networkx as nx
 import pandas as pd
 
-from .read_data import read_edge_list, read_gene_names, read_node_groups
+from .read_data import (
+    Interaction,
+    read_edge_list,
+    read_gene_names,
+    read_node_groups,
+    read_protein_complexes,
+)
 
 
 class DataMisalignmentError(BaseException):
@@ -57,6 +64,19 @@ def _add_edges_to_graph(gr: nx.DiGraph, edge_list: pd.DataFrame) -> None:
     return None
 
 
+def _add_protein_complex_edges(
+    gr: nx.DiGraph, complexes: Iterable[Iterable[str]]
+) -> None:
+    new_edges: list[tuple[str, str, dict[str, Any]]] = []
+    for complex in complexes:
+        _complex = set(complex)
+        for a, b in product(_complex, _complex):
+            if a == b:
+                continue
+            new_edges.append((a, b, {"interaction": Interaction.PROTEIN_COMPLEX}))
+    gr.add_edges_from(new_edges)
+
+
 def ras_pathway_graph() -> nx.DiGraph:
     """Generate the Ras pathway as a graph.
 
@@ -79,5 +99,6 @@ def ras_pathway_graph() -> nx.DiGraph:
     edge_list = read_edge_list()
     _check_all_edge_list_nodes_in_graph(gr, edge_list=edge_list)
     _add_edges_to_graph(gr, edge_list=edge_list)
+    _add_protein_complex_edges(gr, complexes=read_protein_complexes())
     assert nx.number_weakly_connected_components(gr) == 1
     return gr
