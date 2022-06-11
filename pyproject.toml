@@ -9,7 +9,10 @@ license = {file = "LICENSE"}
 classifiers = ["License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"]
 dynamic = ["version", "description"]
 dependencies = [
-    ""
+    "networkx[default] >=2.8.0",
+    "pandas >=1.4.0",
+    "openpyxl",
+    "pyjanitor"
 ]
 
 [project.urls]
@@ -21,8 +24,16 @@ test = [
     "pytest-cov",
     "pytest-pythonpath",
 ]
-dev = [
+style = [
     "black",
     "mypy",
+    "isort",
+    "pydocstyle",
+    "flake8",
+]
+dev = [
+    "jupyterlab >=3.4.0",
+    "jupyterlab-code-formatter",
+    "black",
     "isort",
 ]
