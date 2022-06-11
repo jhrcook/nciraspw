@@ -31,6 +31,7 @@ jobs:
     - name: "Generate report"
       run: |
         tox -e coverage
+        coverage report -m
 
     - name: "Upload Coverage to Codecov"
       env:
