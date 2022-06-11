@@ -9,9 +9,6 @@ on:
   pull_request:
   workflow_dispatch:
 
-env:
-  CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
-
 jobs:
   run:
     name: "Code coverage report."
@@ -33,6 +30,9 @@ jobs:
     - name: "Generate report"
       run: |
         tox -e coverage
+        coverage report -m
 
     - name: "Upload Coverage to Codecov"
+      env:
+        CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
       uses: codecov/codecov-action@v3
