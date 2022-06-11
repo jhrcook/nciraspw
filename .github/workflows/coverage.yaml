@@ -12,11 +12,7 @@ on:
 jobs:
   run:
     name: "Code coverage report."
-
     runs-on: ubuntu-latest
-    env:
-      OS: ubuntu-latest
-      PYTHON: "3.9"
 
     steps:
     - name: "Check out the repo"
