@@ -16,12 +16,12 @@ class MissingRasPwDataError(BaseException):
     ...
 
 
-def _check_and_read_excel_sheet(data_file: RasPathwayDataFile) -> pd.DataFrame:
+def _check_and_read_csv(data_file: RasPathwayDataFile) -> pd.DataFrame:
     if not ras_pw_file_exists(data_file):
         raise MissingRasPwDataError(data_file.value)
 
     with pkg_resources.path(ras_pw_data, ras_pw_file_name(data_file)) as fpath:
-        edge_list = pd.read_excel(str(fpath))
+        edge_list = pd.read_csv(str(fpath))
 
     return edge_list
 
@@ -42,7 +42,7 @@ def read_gene_names() -> pd.DataFrame:
         RasPathwayDataFile.GENE_NAMES_CUSTOM,
     ]
     return (
-        pd.concat([_check_and_read_excel_sheet(f) for f in gene_name_files])
+        pd.concat([_check_and_read_csv(f) for f in gene_name_files])
         .reset_index(drop=True)
         .clean_names()
         .rename(
@@ -67,7 +67,7 @@ def read_node_groups(expand: bool = True) -> pd.DataFrame:
     Returns:
         pd.DataFrame: Node groups data frame.
     """
-    node_groups = _check_and_read_excel_sheet(RasPathwayDataFile.NODE_GROUPS).astype(
+    node_groups = _check_and_read_csv(RasPathwayDataFile.NODE_GROUPS).astype(
         {"group_id": str}
     )
     if not expand:
@@ -91,7 +91,7 @@ def read_node_group_interactions() -> pd.DataFrame:
         pd.DataFrame: Node group interactions data frame.
     """
     return (
-        _check_and_read_excel_sheet(RasPathwayDataFile.GROUP_EDGE_LIST)
+        _check_and_read_csv(RasPathwayDataFile.GROUP_EDGE_LIST)
         .astype({"from": str, "to": str})
         .rename(columns={"from": "from_grp", "to": "to_grp"})
     )

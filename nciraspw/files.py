@@ -20,10 +20,10 @@ class RasPathwayDataFile(Enum):
 def ras_pw_file_name(ras_pw_file: RasPathwayDataFile) -> str:
     """File name for a Ras pathway data file."""
     file_map: Final[dict[RasPathwayDataFile, str]] = {
-        RasPathwayDataFile.GENE_NAMES: "ras-pathway-gene-names.xlsx",
-        RasPathwayDataFile.GENE_NAMES_CUSTOM: "ras-pathway-gene-names_custom.xlsx",
-        RasPathwayDataFile.NODE_GROUPS: "ras-pathway-node-groups.xlsx",
-        RasPathwayDataFile.GROUP_EDGE_LIST: "ras-pathway-group-interactions.xlsx",
+        RasPathwayDataFile.GENE_NAMES: "ras-pathway-gene-names.csv",
+        RasPathwayDataFile.GENE_NAMES_CUSTOM: "ras-pathway-gene-names_custom.csv",
+        RasPathwayDataFile.NODE_GROUPS: "ras-pathway-node-groups.csv",
+        RasPathwayDataFile.GROUP_EDGE_LIST: "ras-pathway-group-interactions.csv",
     }
     return file_map[ras_pw_file]
 
