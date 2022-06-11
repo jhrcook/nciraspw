@@ -35,16 +35,23 @@ A table of gene names, protein names, and alternative gene names are provided on
 read_data.read_gene_names().head()
 ```
 
-    /Users/admin/Developer/haigis-lab/nciraspw/.env/lib/python3.10/site-packages/openpyxl/worksheet/_reader.py:312: UserWarning: Unknown extension is not supported and will be removed
-      warn(msg)
-    /Users/admin/Developer/haigis-lab/nciraspw/.env/lib/python3.10/site-packages/openpyxl/worksheet/_reader.py:312: UserWarning: Unknown extension is not supported and will be removed
-      warn(msg)
-
-
 
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -103,6 +110,19 @@ read_data.read_node_groups().head()
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -166,6 +186,19 @@ read_data.read_node_group_interactions().head()
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -223,6 +256,19 @@ read_data.read_edge_list().head()
 
 
 <div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -290,12 +336,6 @@ from nciraspw.ras_pw_graph import ras_pathway_graph
 ras_pw = ras_pathway_graph()
 print(ras_pw)
 ```
-
-    /Users/admin/Developer/haigis-lab/nciraspw/.env/lib/python3.10/site-packages/openpyxl/worksheet/_reader.py:312: UserWarning: Unknown extension is not supported and will be removed
-      warn(msg)
-    /Users/admin/Developer/haigis-lab/nciraspw/.env/lib/python3.10/site-packages/openpyxl/worksheet/_reader.py:312: UserWarning: Unknown extension is not supported and will be removed
-      warn(msg)
-
 
     DiGraph named 'NCI Ras pathway 2.0' with 228 nodes and 933 edges
 
